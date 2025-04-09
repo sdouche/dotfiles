@@ -1,0 +1,225 @@
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+
+[user]
+	email = seb@nmeos.net
+	name = Sebastien Douche
+    signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCoG5oepW4yChD1zYYPYp4uh8RzZhiH2HkwkXmZsF5V2jc8EvwPabEA8c5wITjLiMPENb/sGEi1gn14zOxyWzqoc1vQpNDMTQ12dMPkySKO5f2/J+KptO617sAIJ3hf2p4yhEe8piqYohjpn0wF8DnywY/7uJXz1wkPB/y4c76UEtCcqxrgHY6j7iJWG3OlAdQF6jcgaSODUloSWII8XyHug46I29ervXeESZw6la42/RFKXFUSWInbS0HFWrl44BmXEFg0NQmXluPNrnmognDReogdLEpXztmdWv1tdwbx4IlR32tFVx0pDuUkLamR4TqrAHd3OUfBPHNHFUNRiwKP002BJrtepmSa2qIsmUMi3CmgtxfMDDxfM6ZM7Cm5s+ZgnJ+pk9HpqGGE8LMWHq4jbLHBJFQ7XHQ4vaRbhyWzwKzigh9oQwimRHYQ+NOBN+gG9PuGof3t3zLSeFWqoWsVaJm3iqxMrZmDaiWin69ng0feqa1gMuXOiMBQNh2eMiDsd5UJQfABl8g+bmpB9boSHs7D1xmdaBzZ3lxc0DAJt/Q4+yMmlJVOX4NDu8V2hpOzI4kikJZbB+sYm/SsvPoH6B28AYjK6ffsx/ewFyrE8P9JnE2N6MakSuAJQCptRsD3LCXVh05iYcqNePLv4Nee+tkQg5XAQEWN4Z1kh3IBoQ==
+
+
+[core]
+	excludesfile = /home/sdouche/.gitignore
+	pager = "less -FXRS"
+	editor = nvim
+	whitespace = trailing-space,space-before-tab
+	autocrlf = input
+
+[branch]
+	master = rebase
+	main = rebase
+
+[push]
+	default = simple
+	followTags = true
+
+[merge]
+	tool = meld
+	conflictstyle = diff3
+	stat = true
+
+[diff]
+	tool = meld
+#	algorithm = patience
+	mnemonicprefix = true
+	renames = copies
+
+[difftool]
+	prompt = false
+
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"
+
+[color]
+	ui = auto
+
+[url "https://github.com"]
+	insteadOf = gh:
+
+[url "https://gist.github.com/"]
+		insteadOf = gist:
+
+[alias]
+	##### Basic aliases
+	# Status
+	st = status
+	s = status -s
+
+	# Branches
+	br = branch
+	bra = branch -a
+	sb = show-branch
+
+	# Commit
+	ci = commit
+
+	# Checkout
+	co = checkout
+
+	# Show remote repositories
+	r = remote -v
+
+	# Amend last commit
+	amend = ci --amend
+
+	# Removes files/directories from staging
+	unadd = reset HEAD --
+
+	##### Diff aliases
+	# Diff and show commands with word-diff style
+	wd = diff --word-diff
+	ws = show --word-diff
+
+	# Show diff before pull
+	do = diff ORIG_HEAD HEAD
+
+	# Show modified lines in the index
+	staged = diff --cached
+
+	# Show modified files
+	changes = diff --name-status -r
+
+	# Diff with statistics
+	ds = diff --stat -r
+
+	##### Log aliases
+	# Show HEAD commit
+	head = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n1
+
+	# Show commits from origin/master to HEAD
+	heads = !git log origin/master.. --format='%Cred%h%Creset;%C(yellow)%an%Creset;%H;%Cblue%f%Creset' | git name-rev --stdin --always --name-only | column -t -s';'
+
+	# Short one line logs with ref-names
+	l = log --oneline --decorate=short
+
+	# Shows the last git logentry (hash, author, date commitmessage)
+	llm = log -1
+
+	# Last log message of all submodules
+	llms = !git sf "git llm;"
+
+	# Short one line logs with ref-names and statistics
+	gl = log --oneline --decorate --stat --graph
+
+	# Short one line logs with ref-names (yellowà, date (green) and author (blue)
+	glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+
+	# Show fetched commits
+	lc = log ORIG_HEAD.. --stat --no-merges
+
+	# Graph log with full commit message
+	glaaa = log --graph --abbrev-commit --date=relative
+
+	##### Submodules
+	# Shows current sha1s of all submodules and number of commits
+	shc = !git sf 'git h; git c'
+
+	# Runs submodule-initialisation and update after a fresh checkout RECURSIVE!
+	siu = !git submodule init; git submodule update; git submodule foreach \"git siu\"
+
+	# Pushs all submodules to origin master
+	pushsub = submodule foreach "git push origin master"
+
+	# Pull submodules from origin master
+	pullsub = submodule foreach "git pull origin master"
+
+	# Shortcut when running something on all submodules - eg. git sf "git s"
+	sf = submodule foreach
+
+	##### Application
+	# Opens gitk with all branches and current branch
+	k = !gitk --all --select-commit=HEAD &
+
+	# Opens meld the diff-viewer with current directory
+	m = !meld . &
+
+	# [g = gui]
+	g = !git gui &
+
+	# [q = qgit]
+	q = !qgit &
+
+	# Opens git gui if there are changes in the repository
+	icg = !REPOCHANGED=`git s`; REPOCHANGED=${#REPOCHANGED}; if [ $REPOCHANGED != 0 ]; then git gui & fi;
+
+	# Open git guis for all submodules which have changes
+	subgui = submodule foreach git icg
+
+	##### Misc
+	# Show last commiter
+	whois = !sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -
+
+	# Show last commit message
+	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+
+	# Hash of HEAD
+	h = rev-list --max-count=1 HEAD
+
+	# Show users which have commits in current branch
+	ul = !git log --format='%aN' | sort -u
+
+	# Remove deleted files
+	r = !git ls-files -z --deleted | xargs -0 git rm
+
+	# Start a new local repository and perform initial commit
+	icommit = git commit --allow-empty -m \"Initial commit\"
+
+	# Show users which have commits in current branch, including number of commits, sorted (most commits last)
+	uccl = !git log --format='%aN <%aE>'  | awk '{arr[$0]++} END{for (i in arr){print arr[i], i;}}' | sort -n
+
+	# Number of commits in current branch
+	c  = !git log --oneline | wc -l
+
+	# Creates a tar.gz archive named after the last commits hash from HEAD! in the directory above the repository
+	ahg = !git archive HEAD --format=tar | gzip > ../`git h`.tar.gz
+
+	# shows ignored directories
+	ignored = !git ls-files --others -i --exclude-standard --directory
+
+	# Move to the root of the repository
+	root = !cd $(git rev-parse --show-cdup)
+
+	# Show the root directory of the repository
+	sroot = rev-parse --show-toplevel
+
+	# Prune remote branches
+	prune-all = !git remote | xargs -n 1 git remote prune
+
+	# Show aliases
+	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+
+	# Show upstream for the current branch
+	upstream = !git for-each-ref --format='%(upstream:short)' `git symbolic-ref HEAD`
+
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+
+[sequence]
+	editor = interactive-rebase-tool
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	program = /opt/1Password/op-ssh-sign
+
+[commit]
+	gpgsign = true
