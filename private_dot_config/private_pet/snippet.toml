@@ -1,0 +1,108 @@
+
+[[Snippets]]
+  Description = "List AWS running instances"
+  Output = ""
+  Tag = []
+  command = "awless -p <profile=default> list instances --filter state=running"
+
+[[Snippets]]
+  Description = "k8s run debug pod"
+  Output = ""
+  Tag = []
+  command = "kubectl run -i --rm --tty debug --image=busybox --restart=Never -- sh"
+
+[[Snippets]]
+  Description = "JSON get .textPayload"
+  Output = ""
+  Tag = []
+  command = "jq -rnc --stream 'fromstream(1|truncate_stream(inputs)) | .textPayload'"
+
+[[Snippets]]
+  Description = "GCP active configuration"
+  Output = ""
+  Tag = []
+  command = "gcloud config configurations activate"
+
+[[Snippets]]
+  Description = "Show AWS EKS admin token"
+  Output = ""
+  Tag = []
+  command = "kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}')"
+
+[[Snippets]]
+  Description = "Find the last AWS AMI from Amazon"
+  Output = ""
+  Tag = []
+  command = "aws ec2 describe-images --owners amazon --filters \"Name=name,Values=amzn*\" --query 'sort_by(Images, &CreationDate)[].Name'"
+
+[[Snippets]]
+  Description = "Remove all stopped containers"
+  Output = ""
+  Tag = []
+  command = "bass 'docker rm $(docker ps -a -q)"
+
+[[Snippets]]
+  Description = "bass 'docker rmi $(docker images | grep \"^<none>\" | awk \"{print $3}\")'"
+  Output = ""
+  Tag = []
+  command = "Remove all untagged images"
+
+[[Snippets]]
+  Description = "Lit Snapshots on AWS Development account"
+  Output = ""
+  Tag = []
+  command = "aws --profile=<aws-account=development-developer> rds describe-db-snapshots | jq '.DBSnapshots[] | .DBSnapshotIdentifier'"
+
+[[Snippets]]
+  Description = "Generate AWS token for databases on root account"
+  Output = ""
+  Tag = []
+  command = "aws rds generate-db-auth-token --hostname <param>.cfnyv3wdun8e.eu-west-1.rds.amazonaws.com --port 5432 --region eu-west-1 --username sdouche"
+
+[[Snippets]]
+  Description = "Terraform apply on prod environments"
+  Output = ""
+  Tag = []
+  command = "fish -c 'for i in coal cpp lng lpg oil; terraform workspace select $i-<param>; terraform apply -var-file=/home/sdouche/src/kpler/terraform-environments/prod/front/$i.tfvars; end'"
+
+[[Snippets]]
+  Description = "Terraform apply on prod-redesign environments"
+  Output = ""
+  Tag = []
+  command = "fish -c 'for i in coal commodities lng lpg; terraform workspace select $i-<param>; terraform apply -var-file=/home/sdouche/src/kpler/terraform-environments/prod/front/$i-redesign.tfvars; end'"
+
+[[Snippets]]
+  Description = "AWS List Access Key ID of all users"
+  Output = ""
+  Tag = []
+  command = "for user in $(aws iam list-users --output text | awk '{print $NF}'); do aws iam list-access-keys --user $user --output text; done"
+
+[[Snippets]]
+  Description = "Install Minikube"
+  Output = ""
+  Tag = []
+  command = "curl -Lo minikube https://storage.googleapis.com/minikube/releases/v<version>/minikube-linux-amd64 && chmod +x minikube && mv minikube ~/.local/bin"
+
+[[Snippets]]
+  Description = "Install eksctl"
+  Output = ""
+  Tag = []
+  command = "curl --silent --location \"https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz\" | tar xz -C ~/.local/bin"
+
+[[Snippets]]
+  Description = "Install Skaffold"
+  Output = ""
+  Tag = []
+  command = "curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/v<version>/skaffold-linux-amd64 && chmod +x skaffold && mv skaffold ~/.local/bin"
+
+[[Snippets]]
+  Description = "Install Helm"
+  Output = ""
+  Tag = []
+  command = "curl --silent --location \"https://get.helm.sh/helm-v<version>-linux-amd64.tar.gz\" | tar xz -C /tmp && mv /tmp/linux-amd64/helm ~/.local/bin && chmod +x ~/.local/bin/helm"
+
+[[Snippets]]
+  Description = "Install tf-switch"
+  Output = ""
+  Tag = []
+  command = "curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/master/install.sh | bash -s -- -b $HOME/.local/bin"
