@@ -18,7 +18,6 @@ $aws\
 [](fg:blue bg:lavender)\
 $kubernetes\
 [ ](fg:lavender)\
-$cmd_duration\
 $line_break\
 $character"""
 
