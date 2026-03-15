@@ -1,4 +1,5 @@
 [tools]
+amazon-ecr-credential-helper = "latest"
 ansible = "latest"
 argocd = "latest"
 atmos = "latest"
