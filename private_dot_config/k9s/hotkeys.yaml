@@ -1,0 +1,17 @@
+hotKeys:
+  shift-1:
+    shortCut: Shift-1
+    description: View pods
+    command: v1/pods all
+  shift-2:
+    shortCut: Shift-2
+    description: View deployments
+    command: dp
+  shift-3:
+    shortCut: Shift-3
+    description: View services
+    command: svc
+  shift-4:
+    shortCut: Shift-4
+    description: XRay deployments
+    command: xray deploy
